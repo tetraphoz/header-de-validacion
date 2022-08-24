@@ -17,7 +17,14 @@ bool es_int(char *entero) {
   if (len == 0)
     return false;
 
-  for (int i = 0; i < len; i++) {
+  if (len == 1)
+    return isdigit(entero[0]);
+
+  int i = 0;
+  if (entero[0] == '-')
+    i++;
+
+  for (; i < len; i++) {
     if (!isdigit(entero[i]))
       return false;
   }
@@ -30,25 +37,23 @@ bool es_float(char *flotante) {
   if (len == 0)
     return false;
 
-  int canPunto = 0;
-  int canGuiones = 0;
+  if (len == 1)
+    return isdigit(flotante[0]);
 
-  for (int i = 0; i < len; i++) {
-    if (isdigit(flotante[i]) || flotante[i] == '.' || flotante[i] == '-') {
-      if (flotante[i] == 46)
-        canPunto++; // 46 == '.'
-      if (flotante[i] == '-')
-        canGuiones++;
-    } else
+  int i = 0;
+
+  if (flotante[0] == '-')
+    i++;
+
+  while (flotante[i] != '.' && i < len) {
+    if (!isdigit(flotante[i++]))
       return false;
   }
 
-  if (canPunto > 1 || canGuiones > 1)
-    return false;
-
-  // Solo permitir signo negativo al inicio
-  if(canGuiones == 1 && flotante[0] != '-')
-    return false;
+  for (i++; i < len; i++) {
+    if (!isdigit(flotante[i]))
+      return false;
+  }
 
   return true;
 }

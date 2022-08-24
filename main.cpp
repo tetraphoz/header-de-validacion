@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     // Usamos fgets porque gets es obsolescente
     fgets(flotante, 20, stdin); 
     // fgets a diferencia de gets incluye un '\n' al final de la linea 
-    flotante[strcspn(entero, "\r\n")] = 0; // Sustituimos el '\n' por un '\0'
+    flotante[strcspn(flotante, "\r\n")] = 0; // Sustituimos el '\n' por un '\0'
 
     if(es_float(flotante)){
       char *end;
